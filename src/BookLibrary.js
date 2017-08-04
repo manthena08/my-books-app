@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import SingleBook from './SingleBook'
 class BookLibrary extends Component {
-
+	static PropTypes = {
+		availableBooks: PropTypes.array.isRequired,
+		updateShelf: PropTypes.func.isRequired
+	}
 
 	render() {
 		let currentReading = this.props.availableBooks.filter(book => book.shelf === 'currentlyReading')
@@ -20,7 +24,7 @@ class BookLibrary extends Component {
 							<div className="bookshelf-books">
 								<ol className="books-grid">
 									{currentReading.map(book => (
-										<SingleBook book={book} />
+										<SingleBook book={book} key={book.id} updateShelf={(book,shelf) => this.props.updateShelf(book,shelf)}/>
 									))}
 								</ol>
 							</div>
@@ -30,7 +34,7 @@ class BookLibrary extends Component {
 							<div className="bookshelf-books">
 								<ol className="books-grid">
 									{wantToRead.map(book => (
-										<SingleBook book={book} />
+										<SingleBook book={book} key={book.id} updateShelf={(book,shelf) => this.props.updateShelf(book,shelf)}/>
 									))}
 								</ol>
 							</div>
@@ -40,7 +44,7 @@ class BookLibrary extends Component {
 							<div className="bookshelf-books">
 								<ol className="books-grid">
 									{read.map(book => (
-										<SingleBook book={book} />
+										<SingleBook book={book} key={book.id} updateShelf={(book,shelf) => this.props.updateShelf(book,shelf)}/>
 									))}
 								</ol>
 							</div>

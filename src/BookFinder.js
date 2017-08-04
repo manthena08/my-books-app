@@ -2,24 +2,32 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import SingleBook from './SingleBook'
+
 class BookFinder extends Component {
 	state = {
 		query: '',
-		availableBook: []
+		showBook: []
 	}
 
 	updateQuery = (value) => {
 		this.setState({
-			query: value.trim()
-		})
-		BooksAPI.search(value, 20)
-			.then(data => {
-				this.setState({
-					availableBook: data
-				})
-			})
+			query: value
+		},this.searchQuery)
 
 	}
+	
+	searchQuery = () => {
+		if (this.state.query) {
+			BooksAPI.search(this.state.query, 20)
+				.then(data => {
+					console.log(data)
+					this.setState({
+						showBook: data
+					})
+				})
+		}
+	}
+
 	render() {
 		return (
 			<div className="search-books">
@@ -32,9 +40,16 @@ class BookFinder extends Component {
 				</div>
 				<div className="search-books-results">
 					<ol className="books-grid">
-						{this.state.availableBook.map((book) => (
-							<SingleBook book={book} />
-						))}
+						{this.state.showBook.length > 0 && (
+							this.state.showBook.map((data) => (
+								<SingleBook book={data} key={data.id} />
+							))
+						)}
+						{this.state.showBook.length <= 0 && (
+							<div>No Results</div>
+						)}
+
+
 
 					</ol>
 				</div>
