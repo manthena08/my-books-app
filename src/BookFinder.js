@@ -11,7 +11,7 @@ class BookFinder extends Component {
 
 	updateQuery = (value) => {
 		this.setState({
-			query: value
+			query: value.trim()
 		}, this.searchQuery)
 
 	}
@@ -24,6 +24,10 @@ class BookFinder extends Component {
 						showBook: data
 					})
 				})
+		}else{
+			this.setState({
+				showBook: []
+			})
 		}
 	}
 
