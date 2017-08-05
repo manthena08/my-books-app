@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 
 class SingleBook extends Component {
 	static PropTypes = {
-		book: PropTypes.object.isRequired
+		book: PropTypes.object.isRequired,
+		updateShelf: PropTypes.func.isRequired
 	}
 	render() {
 		let book = this.props.book
