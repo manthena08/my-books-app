@@ -17,14 +17,15 @@ class BookFinder extends Component {
 	}
 
 	searchQuery = () => {
-		if (this.state.query) {
-			BooksAPI.search(this.state.query, 20)
-				.then(data => {
-					this.setState({
-						showBook: data
-					})
+		let {query} = this.state
+		if (query) {
+			BooksAPI.search(query, 20)
+				.then((data) => {
+						this.setState({
+							showBook: data
+						})
 				})
-		}else{
+		} else {
 			this.setState({
 				showBook: []
 			})
@@ -45,8 +46,8 @@ class BookFinder extends Component {
 				<div className="search-books-results">
 					<ol className="books-grid">
 						{showBook.length > 0 && (
-							showBook.map((book) => (
-								<SingleBook book={book} key={book.id} updateShelf={(book, shelf) => this.props.updateShelf(book, shelf)} />
+							showBook.map((book,index) => (
+								<SingleBook book={book} key={book.id} updateShelf={this.props.updateShelf} />
 							))
 						)}
 						{showBook.length <= 0 && (

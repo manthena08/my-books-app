@@ -28,11 +28,13 @@ class BooksApp extends React.Component {
         this.getAllBooks()
       })
   }
+
   render() {
     return (
       <div className="app">
         <Route exact path="/" render={() => (
-          <BookLibrary availableBooks={this.state.books} updateShelf={this.updateBookShelf}/>
+          <BookLibrary availableBooks={this.state.books}
+            updateShelf={this.updateBookShelf}/>
         )} />
 
         <Route path="/search" render={() => (
