@@ -35,5 +35,9 @@ To simplify your development process, we've provided a backend server for you to
     npm install
     npm start
 
+## How to Use
+This application has two main pages. One default page which will show all the current books. Each book will display its information and a selection dropdown which can be used to move each book to different shelfs. 
+The other page is search where you can search for any new books and with the same control dropdown you can move any book to different shelfs. 
+
 ## Note
 The backend API uses a fixed set of cached search results and is limited to a particular set of search terms, which can be found in [SEARCH_TERMS.md](SEARCH_TERMS.md). That list of terms are the _only_ terms that will work with the backend, so don't be surprised if your searches for Basket Weaving or Bubble Wrap don't come back with any results. You can search like art, react etc.
