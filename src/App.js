@@ -29,6 +29,12 @@ class BooksApp extends React.Component {
       })
   }
 
+  getBookShelf = (id) => {
+
+    let [bookMatched] = this.state.books.filter(b => b.id === id)
+    return bookMatched ? bookMatched.shelf : false
+  }
+
   render() {
     return (
       <div className="app">
@@ -38,7 +44,7 @@ class BooksApp extends React.Component {
         )} />
 
         <Route path="/search" render={() => (
-          <BookFinder updateShelf={this.updateBookShelf}/>
+          <BookFinder getBookShelf={this.getBookShelf} updateShelf={this.updateBookShelf}/>
         )} />
       </div>
     )

@@ -1,40 +1,65 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import * as BooksAPI from './BooksAPI'
 import SingleBook from './SingleBook'
 
 class BookFinder extends Component {
+	static PropTypes = {
+		getBookShelf: PropTypes.func.isRequired,
+		updateShelf: PropTypes.func.isRequired
+	}
+
 	state = {
 		query: '',
 		showBook: []
 	}
 
 	updateQuery = (value) => {
-		if(!value.trim()){
+		if (!value.trim()) {
 			value = value.trim()
-		}	
+		}
 		this.setState({
-				query: value
-			}, this.searchQuery)
+			query: value
+		}, this.searchQuery)
 	}
 
 	searchQuery = () => {
 		let { query } = this.state
 		if (query) {
 			BooksAPI.search(query, 20)
-				.then((data) => {
-					if (JSON.stringify(data) !== JSON.stringify(this.state.showBook)) {
+				.then((response) => {
+					if (response.length > 0) {
 						this.setState({
-							showBook: data
+							showBook: this.updateBookself(response)
 						})
+					} else {
+						this.clearResults()
 					}
 				})
 		} else {
-			this.setState({
-				showBook: []
-			})
+			this.clearResults()
 		}
 	}
+
+	clearResults = () => {
+		this.setState({
+			showBook: []
+		})
+	}
+
+	updateBookself = (data) => {
+		let updatedBookResults = []
+		updatedBookResults = data.map(book => {
+			let bookExists = this.props.getBookShelf(book.id)
+			if (bookExists) {
+				book.shelf = bookExists
+			}
+			return book
+		})
+		return updatedBookResults
+	}
+
 
 	render() {
 		let showBook = this.state.showBook
