@@ -14,9 +14,18 @@ class BookLibrary extends Component {
 		let wantToRead = this.props.availableBooks.filter(book => book.shelf === 'wantToRead')
 		let read = this.props.availableBooks.filter(book => book.shelf === 'read')
 		let AllBooks = {
-			currentlyReading: currentlyReading,
-			wantToRead: wantToRead,
-			read: read
+			currentlyReading: {
+				title: 'Currently Reading',
+				books: currentlyReading
+			},
+			wantToRead: {
+				title: 'Want to Read',
+				books: wantToRead
+			},
+			read: {
+				title: 'Read',
+				books: read
+			}
 		}
 		return (
 			<div className="list-books">
@@ -28,23 +37,15 @@ class BookLibrary extends Component {
 						<div>
 							{Object.keys(AllBooks).map((keyName, index) => (
 								<div className="bookshelf" key={index}>
-									{keyName === "currentlyReading" && (
-										<h2 className="bookshelf-title">Currently Reading</h2>
-									)}
-									{keyName === "wantToRead" && (
-										<h2 className="bookshelf-title">Want to Read</h2>
-									)}
-									{keyName === "read" && (
-										<h2 className="bookshelf-title">Read</h2>
-									)}
+									<h2 className="bookshelf-title">{AllBooks[keyName].title}</h2>
 									<div className="bookshelf-books">
 										<ol className="books-grid">
-											{AllBooks[keyName].length > 0 && (
-												AllBooks[keyName].map((book, index) => (
+											{AllBooks[keyName].books.length > 0 && (
+												AllBooks[keyName].books.map((book, index) => (
 													<SingleBook book={book} key={book.id} updateShelf={this.props.updateShelf} />
 												))
 											)}
-											{AllBooks[keyName].length <= 0 && (
+											{AllBooks[keyName].books.length <= 0 && (
 												<li>
 													No Book Avaiable
 												</li>
