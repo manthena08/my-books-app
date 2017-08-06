@@ -10,10 +10,12 @@ class BookFinder extends Component {
 	}
 
 	updateQuery = (value) => {
+		if(!value.trim()){
+			value = value.trim()
+		}	
 		this.setState({
-			query: value.trim()
-		}, this.searchQuery)
-
+				query: value
+			}, this.searchQuery)
 	}
 
 	searchQuery = () => {
